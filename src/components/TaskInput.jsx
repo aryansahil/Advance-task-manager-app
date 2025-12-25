@@ -4,17 +4,29 @@ import {
   Paper,
   TextField,
   IconButton,
+  Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 export default function TaskInput() {
   const { addTask } = useContext(TaskContext);
   const [text, setText] = useState("");
+  const [error, setError] = useState("");
 
   const submit = () => {
-    if (!text.trim()) return;
-    addTask(text);
+    if (!text.trim()) {
+      setError("Please add something");
+      return;
+    }
+
+    addTask(text.trim());
     setText("");
+    setError("");
+  };
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+    if (error) setError("");
   };
 
   return (
@@ -25,7 +37,7 @@ export default function TaskInput() {
         display: "flex",
         alignItems: "center",
         gap: 1.5,
-        mb: 3,
+        mb: 1,
       }}
     >
       <TextField
@@ -33,17 +45,18 @@ export default function TaskInput() {
         size="medium"
         placeholder="What needs to be done?"
         value={text}
-        onChange={(e) => setText(e.target.value)}
-        sx={{
-          flexGrow: 1,
-        }}
+        onChange={handleChange}
+        error={Boolean(error)}
+        helperText={error}
       />
+
       <IconButton
         color="primary"
         onClick={submit}
         sx={{
           height: 48,
           width: 48,
+          alignSelf: "flex-start",
         }}
       >
         <AddIcon />
