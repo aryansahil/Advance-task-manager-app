@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { CssBaseline, Container, Typography, Stack } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { TaskProvider, TaskContext } from "./context/TaskContext";
+import { getTheme } from "./theme";
+import TaskInput from "./components/TaskInput";
+import TaskList from "./components/TaskList";
+import FilterBar from "./components/FilterBar";
+import ThemeToggle from "./components/ThemeToggle";
+import { useContext, useEffect } from "react";
 
-function App() {
+function AppContent() {
+  const { mode } = useContext(TaskContext);
+
+  useEffect(() => {
+    document.body.setAttribute("data-theme", mode);
+  }, [mode]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={getTheme(mode)}>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <div className="app-shell">
+          <Stack direction={"row"} justifyContent="space-between" alignItems="center" mb={1}>
+            <Typography sx={{
+              fontWeight: "bold"
+            }}>Task Manager</Typography>
+            <ThemeToggle />
+          </Stack>
+          <TaskInput />
+          <FilterBar />
+          <TaskList />
+        </div>
+      </Container>
+    </ThemeProvider>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <TaskProvider>
+      <AppContent />
+    </TaskProvider>
+  );
+}
