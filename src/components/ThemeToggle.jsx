@@ -1,4 +1,3 @@
-// src/components/ThemeToggle.jsx
 import { useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
 import { IconButton, Box } from "@mui/material";

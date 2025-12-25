@@ -17,7 +17,7 @@ function TaskItem({ task }) {
 
   const handleDelete = () => {
     setVisible(false);
-    setTimeout(() => deleteTask(task.id), 300); // match animation
+    setTimeout(() => deleteTask(task.id), 300);
   };
 
   return (

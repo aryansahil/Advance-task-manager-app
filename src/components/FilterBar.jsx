@@ -1,4 +1,3 @@
-// src/components/FilterBar.jsx
 import { useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
 import { Stack, Chip } from "@mui/material";
